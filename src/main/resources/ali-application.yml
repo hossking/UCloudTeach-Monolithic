@@ -1,0 +1,9 @@
+appId: *
+privateKey: *
+publicKey: *
+notifyUrl: *
+returnUrl: *
+signType: *
+charset: UTF-8
+gatewayUrl: *
+logPath: ./log

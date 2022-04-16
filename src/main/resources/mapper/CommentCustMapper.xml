@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gpnusz.ucloudteach.mapper.CommentCustMapper">
+    <resultMap id="BaseResultMap" type="cn.gpnusz.ucloudteach.resp.CommonCommentResp">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="course_id" jdbcType="BIGINT" property="courseId"/>
+        <result column="student_id" jdbcType="BIGINT" property="studentId"/>
+        <result column="reply_id" jdbcType="BIGINT" property="replyId"/>
+        <result column="top_flag" jdbcType="BIT" property="topFlag"/>
+        <result column="elite_flag" jdbcType="BIT" property="eliteFlag"/>
+        <result column="create_date" jdbcType="DATE" property="createDate"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="head_pic" jdbcType="VARCHAR" property="headPic"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.gpnusz.ucloudteach.resp.CommonCommentResp">
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+    </resultMap>
+
+    <select id="getCommentByCourse" resultMap="ResultMapWithBLOBs">
+        select t1.*, t2.name, t2.head_pic, t2.phone
+        from course_comment t1
+                 left join student_info t2
+                           on t2.id = t1.student_id
+        where course_id = #{courseId}
+        order by top_flag desc, elite_flag desc, create_time desc;
+    </select>
+
+</mapper>

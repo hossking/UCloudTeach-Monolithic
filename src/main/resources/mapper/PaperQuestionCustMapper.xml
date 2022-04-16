@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gpnusz.ucloudteach.mapper.PaperQuestionCustMapper">
+    <resultMap id="BaseResultMap" type="cn.gpnusz.ucloudteach.resp.QuestionCust">
+        <result column="real_id" jdbcType="BIGINT" property="id"/>
+        <result column="question_id" jdbcType="BIGINT" property="questionId"/>
+        <result column="subject_id" jdbcType="BIGINT" property="subjectId"/>
+        <result column="course_id" jdbcType="BIGINT" property="courseId"/>
+        <result column="section_id" jdbcType="BIGINT" property="sectionId"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="score" jdbcType="INTEGER" property="score"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.gpnusz.ucloudteach.resp.QuestionCust">
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="options" jdbcType="LONGVARCHAR" property="options"/>
+        <result column="answer_text" jdbcType="LONGVARCHAR" property="answerText"/>
+        <result column="answer_option" jdbcType="LONGVARCHAR" property="answerOption"/>
+        <result column="analysis" jdbcType="LONGVARCHAR" property="analysis"/>
+    </resultMap>
+    <select id="selectQuestionByPaperId" resultMap="ResultMapWithBLOBs">
+        select t2.*,t1.score, t1.sort, t1.create_time as add_time, t1.id as real_id,t2.id as question_id
+        from paper_question t1
+                 left join question t2
+                           on t1.question_id = t2.id
+        where t1.paper_id = #{id}
+        order by t1.sort
+    </select>
+</mapper>

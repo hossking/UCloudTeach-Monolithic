@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gpnusz.ucloudteach.mapper.UserExamCustMapper">
+    <resultMap id="BaseResultMap" type="cn.gpnusz.ucloudteach.resp.UserExamResp">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="student_id" jdbcType="BIGINT" property="studentId"/>
+        <result column="score" jdbcType="INTEGER" property="score"/>
+        <result column="paper_id" jdbcType="BIGINT" property="paperId"/>
+        <result column="check_flag" jdbcType="BIT" property="checkFlag"/>
+        <result column="check_id" jdbcType="BIGINT" property="checkId"/>
+        <result column="exam_time" jdbcType="INTEGER" property="examTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="total_score" jdbcType="INTEGER" property="totalScore"/>
+    </resultMap>
+    <select id="selectExamInfo" resultMap="BaseResultMap">
+        select t1.*, t2.name as name, t2.total_score as total_score
+        from exam_info t1
+                 left join exam_paper t2
+                           on t1.paper_id = t2.id
+        where t1.status = true
+          and t1.student_id = #{studentId};
+    </select>
+
+    <resultMap id="ExamResultMap" type="cn.gpnusz.ucloudteach.resp.UserExamDetailResp">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="question_id" jdbcType="BIGINT" property="questionId"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+    </resultMap>
+    <resultMap extends="ExamResultMap" id="ExamMapWithBLOBs" type="cn.gpnusz.ucloudteach.resp.UserExamDetailResp">
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="options" jdbcType="LONGVARCHAR" property="options"/>
+    </resultMap>
+    <resultMap extends="ExamResultMap" id="ExerciseMapWithBLOBs" type="cn.gpnusz.ucloudteach.resp.UserExamDetailResp">
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="options" jdbcType="LONGVARCHAR" property="options"/>
+        <result column="answer_text" jdbcType="LONGVARCHAR" property="answerText"/>
+        <result column="answer_option" jdbcType="LONGVARCHAR" property="answerOption"/>
+        <result column="analysis" jdbcType="LONGVARCHAR" property="analysis"/>
+    </resultMap>
+
+    <select id="getExamDetail" resultMap="ExamMapWithBLOBs">
+        select t1.id as id, t1.sort, t2.id as question_id, t2.*,t1.score
+        from paper_question t1
+                 left join question t2 on t1.question_id = t2.id
+        where paper_id = #{id}
+        order by sort;
+    </select>
+
+    <select id="getExerciseDetail" resultMap="ExerciseMapWithBLOBs">
+        select t1.id as id, t1.sort, t2.id as question_id, t2.*,t1.score
+        from paper_question t1
+                 left join question t2 on t1.question_id = t2.id
+        where paper_id = #{id}
+        order by sort;
+    </select>
+
+    <resultMap extends="BaseResultMap" id="ExamResResultMap" type="cn.gpnusz.ucloudteach.resp.UserExamResp">
+        <result column="right_count" jdbcType="INTEGER" property="rightCount"/>
+        <result column="question_count" jdbcType="INTEGER" property="questionCount"/>
+        <result column="error_count" jdbcType="INTEGER" property="errorCount"/>
+        <result column="student_answer" jdbcType="LONGVARCHAR" property="studentAnswer"/>
+        <result column="check_list" jdbcType="LONGVARCHAR" property="checkList"/>
+        <result column="pass_score" jdbcType="INTEGER" property="passScore"/>
+    </resultMap>
+
+    <select id="getExamRes" resultMap="ExamResResultMap">
+        select t1.*, t2.name as name, t2.total_score as total_score, t2.question_count as question_count,t2.pass_score as pass_score
+        from exam_info t1
+                 left join exam_paper t2
+                           on t1.paper_id = t2.id
+        where t1.paper_id = #{paperId}
+          and t1.student_id = #{studentId};
+    </select>
+</mapper>

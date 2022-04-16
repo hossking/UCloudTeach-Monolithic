@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org//mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="Mysql" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <!-- 自动检查关键字，为关键字增加反引号 -->
+        <property name="autoDelimitKeywords" value="true"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!--覆盖生成XML文件-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
+        <!-- 生成的实体类添加toString()方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+
+        <!-- 不生成注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://***"
+                        userId="***"
+                        password="***">
+        </jdbcConnection>
+
+        <!-- domain类的位置 -->
+        <javaModelGenerator targetProject="src\main\java"
+                            targetPackage="cn.gpnusz.ucloudteach.entity"/>
+
+        <!-- mapper xml的位置 -->
+        <sqlMapGenerator targetProject="src\main\resources"
+                         targetPackage="mapper"/>
+
+        <!-- mapper类的位置 -->
+        <javaClientGenerator targetProject="src\main\java"
+                             targetPackage="cn.gpnusz.ucloudteach.mapper"
+                             type="XMLMAPPER"/>
+
+<!--        <table tableName="student_info"/>-->
+<!--        <table tableName="grade"/>-->
+<!--        <table tableName="subject"/>-->
+<!--        <table tableName="course"/>-->
+<!--        <table tableName="course_section"/>-->
+<!--        <table tableName="course_period"/>-->
+<!--        <table tableName="course_member"/>-->
+<!--        <table tableName="course_comment"/>-->
+<!--        <table tableName="question"/>-->
+<!--        <table tableName="exam_paper"/>-->
+<!--        <table tableName="paper_question"/>-->
+<!--        <table tableName="exam_info"/>-->
+<!--        <table tableName="swipe_config"/>-->
+<!--        <table tableName="grid_config"/>-->
+<!--        <table tableName="admin"/>-->
+<!--        <table tableName="study_record"/>-->
+        <table tableName="snapshot"/>
+    </context>
+</generatorConfiguration>

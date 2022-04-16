@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gpnusz.ucloudteach.mapper.UserCourseCustMapper">
+  <resultMap id="BaseResultMap" type="cn.gpnusz.ucloudteach.resp.UserCourseResp">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="course_id" jdbcType="BIGINT" property="courseId" />
+    <result column="student_id" jdbcType="BIGINT" property="studentId" />
+    <result column="finish_course" jdbcType="INTEGER" property="finishCourse" />
+    <result column="join_date" jdbcType="DATE" property="joinDate" />
+    <result column="join_time" jdbcType="TIMESTAMP" property="joinTime" />
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="cover" jdbcType="VARCHAR" property="cover"/>
+    <result column="teacher" jdbcType="VARCHAR" property="teacher"/>
+    <result column="price" jdbcType="DECIMAL" property="price" />
+  </resultMap>
+
+  <select id="selectCourseAndMember" resultMap="BaseResultMap">
+    select t1.*,t2.name as name,t2.cover as cover,t2.price as price,t2.teacher as teacher
+    from course_member t1
+        left join course t2
+            on t1.course_id=t2.id
+    where t1.student_id=#{studentId};
+  </select>
+
+</mapper>

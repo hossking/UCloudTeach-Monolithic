@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gpnusz.ucloudteach.mapper.CourseCustMapper">
+    <resultMap id="BaseResultMap" type="cn.gpnusz.ucloudteach.resp.CourseCustResp">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="cover" jdbcType="VARCHAR" property="cover"/>
+        <result column="teacher" jdbcType="VARCHAR" property="teacher"/>
+        <result column="subject_id" jdbcType="BIGINT" property="subjectId"/>
+        <result column="total_member" jdbcType="INTEGER" property="totalMember"/>
+        <result column="total_section" jdbcType="INTEGER" property="totalSection"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="total_period" jdbcType="INTEGER" property="totalPeriod"/>
+        <result column="price" jdbcType="DECIMAL" property="price" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.gpnusz.ucloudteach.resp.CourseCustResp">
+        <result column="description" jdbcType="LONGVARCHAR" property="description"/>
+    </resultMap>
+    <select id="selectCourseDetail" resultMap="ResultMapWithBLOBs">
+        select *
+        from course
+        where 1=1
+        <if test="gradeId != null">
+            and subject_id in (select id from subject where grade_id = #{gradeId})
+        </if>
+        and status = true
+        <if test="courseId != null">
+            and id=#{courseId}
+        </if>
+        order by ${sortField} desc;
+    </select>
+</mapper>

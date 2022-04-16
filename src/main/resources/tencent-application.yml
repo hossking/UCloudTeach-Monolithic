@@ -1,0 +1,4 @@
+SecretId: *
+SecretKey: *
+AppSecretKey: *
+CaptchaAppId: *
