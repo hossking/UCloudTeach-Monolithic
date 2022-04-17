@@ -12,7 +12,7 @@
 #### 2）项目前端
 一个完整的项目应用自然不能少了前端页面展示，项目前端页面分为管理端和学生端：
 
-① 管理端使用`Vue3+Ant-Design-Vue`搭建，仓库地址为：xxx【整理完毕补充】；
+① 管理端使用`Vue3+Ant-Design-Vue`搭建，仓库地址为：[UCloudTeach-Admin](https://gitee.com/h0ss/ucloud-teach-admin)；
 
 ② 学生端使用`Vue3+Vant3`搭建，仓库地址为：xxx【整理完毕补充】；
 
