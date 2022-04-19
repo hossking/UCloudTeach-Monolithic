@@ -14,7 +14,7 @@
 
 ① 管理端使用`Vue3+Ant-Design-Vue`搭建，仓库地址为：[UCloudTeach-Admin](https://gitee.com/h0ss/ucloud-teach-admin)；
 
-② 学生端使用`Vue3+Vant3`搭建，仓库地址为：xxx【整理完毕补充】；
+② 学生端使用`Vue3+Vant3`搭建，仓库地址为：[UCloudTeach-Student](https://gitee.com/h0ss/ucloud-teach-student)；
 
 
 ### 基本架构
